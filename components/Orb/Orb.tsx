@@ -187,7 +187,7 @@ export default function Orb({
     const checkWebGLSupport = () => {
       try {
         const canvas = document.createElement('canvas');
-        const gl = canvas.getContext('webgl2') || canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+        const gl = (canvas.getContext('webgl2') || canvas.getContext('webgl') || canvas.getContext('experimental-webgl')) as WebGLRenderingContext | null;
 
         if (!gl) {
           return false;
@@ -220,7 +220,7 @@ export default function Orb({
     }
 
     // Try to create WebGL renderer with error handling
-    let renderer;
+    let renderer: Renderer;
     try {
       // Add additional context attributes that might help with compatibility
       renderer = new Renderer({ 
@@ -228,9 +228,8 @@ export default function Orb({
         premultipliedAlpha: false,
         antialias: false, // Disable antialiasing for better performance
         depth: false,     // We don't need depth testing for 2D rendering
-        powerPreference: 'default', // Let the browser decide power/performance balance
-        failIfMajorPerformanceCaveat: false, // Don't fail if performance would be poor
-        desynchronized: false // Synchronous rendering for this use case
+        powerPreference: 'default' // Let the browser decide power/performance balance
+        // Note: failIfMajorPerformanceCaveat and desynchronized are not supported in RendererOptions
       });
     } catch (error) {
       console.error("Failed to create WebGL context:", error);
