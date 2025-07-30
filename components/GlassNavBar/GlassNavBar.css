@@ -1,0 +1,173 @@
+.glass-navbar {
+  position: fixed;
+  top: 29px;
+  left: 0;
+  right: 0;
+  height: 72px;
+  z-index: 50;
+  border-radius: 9999px;
+  margin: 0 auto;
+  width: calc(100% - 90px); /* Full width with increased horizontal margin */
+  max-width: 1400px; /* Slightly larger than content to allow for padding */
+}
+
+/* Container for content with max-width */
+.glass-navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 5px;
+}
+
+/* Styles for when backdrop-filter is supported */
+.backdrop-supported {
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+/* Fallback styles when backdrop-filter is not supported */
+.backdrop-not-supported {
+  background: rgba(0, 0, 0, 0.8);
+  border: 1px solid #444;
+}
+
+/* Faded border using pseudo-element */
+.glass-navbar::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;             /* border thickness */
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.40) 0%,
+    rgba(255, 255, 255, 0.20) 40%,
+    rgba(255, 255, 255, 0.06) 100%);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);               /* hollow centre */
+  -webkit-mask-composite: xor;              /* Safari */
+  mask-composite: exclude;                  /* others */
+  pointer-events: none;
+}
+
+/* Brand section with logo and text */
+.glass-navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.glass-navbar-brand svg {
+  flex-shrink: 0;
+}
+
+
+/* Navigation links */
+.glass-navbar-links {
+  display: flex;
+  gap: 32px; /* Increased gap between links */
+  align-items: center;
+}
+
+.glass-navbar-link {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.glass-navbar-link:hover {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Apply button with glassmorphic style */
+.glass-navbar-apply-button {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px) saturate(180%);
+  -webkit-backdrop-filter: blur(10px) saturate(180%);
+  padding: 8px 20px;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+}
+
+.glass-navbar-apply-button:hover {
+  background: rgba(255, 255, 255, 0.25);
+  color: rgba(255, 255, 255, 1);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Hamburger menu for mobile */
+.glass-navbar-hamburger {
+  background: transparent;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.9);
+  transition: color 0.2s ease;
+}
+
+.glass-navbar-hamburger:hover {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Mobile menu styles */
+.glass-navbar-mobile-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin-top: 10px;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  z-index: 100;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Media query for mobile view */
+@media (max-width: 600px) {
+  .glass-navbar {
+    width: calc(100% - 50px); /* Slightly increased margin for mobile */
+  }
+
+  .glass-navbar-container {
+    padding: 0 5px;
+    position: relative;
+  }
+
+  /* Ensure the hamburger menu is properly aligned */
+  .glass-navbar-hamburger {
+    margin-left: auto;
+  }
+}
+
+/* Performance optimization for high DPI screens */
+@media (min-resolution: 2dppx) {
+  .backdrop-supported {
+    backdrop-filter: blur(10px) saturate(140%);
+    -webkit-backdrop-filter: blur(10px) saturate(140%);
+  }
+}
